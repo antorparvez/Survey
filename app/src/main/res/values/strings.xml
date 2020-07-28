@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Survey</string>
+    <string name="view_survey">View Survey</string>
+    <string name="submit_survey">Submit Survey</string>
 </resources>
