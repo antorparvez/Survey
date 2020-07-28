@@ -1,4 +1,4 @@
-package com.assessmentV2tech.survey;
+package com.assessmentV2tech.survey.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.assessmentV2tech.survey.R;
+
 public class MainActivity extends AppCompatActivity {
     private Button viewSurveyBtn,submitSurveyBtn;
     private ImageView main_logo;
@@ -16,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        initView();
 
         //View survey button
         viewSurveyBtn.setOnClickListener(new View.OnClickListener() {

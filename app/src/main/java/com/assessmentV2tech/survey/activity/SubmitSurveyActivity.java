@@ -1,8 +1,10 @@
-package com.assessmentV2tech.survey;
+package com.assessmentV2tech.survey.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.assessmentV2tech.survey.R;
 
 public class SubmitSurveyActivity extends AppCompatActivity {
 
