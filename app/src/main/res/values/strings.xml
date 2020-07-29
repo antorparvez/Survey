@@ -2,4 +2,6 @@
     <string name="app_name">Survey</string>
     <string name="view_survey">View Survey</string>
     <string name="submit_survey">Submit Survey</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
