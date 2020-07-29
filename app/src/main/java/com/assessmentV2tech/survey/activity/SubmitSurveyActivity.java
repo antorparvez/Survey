@@ -29,6 +29,7 @@ public class SubmitSurveyActivity extends AppCompatActivity {
 
                     List<SurveyResponse> myList = response.body();
                     Log.d("TAG", "onResponse: "+myList.size());
+                    response.body().get(0).
                 }
             }
 
