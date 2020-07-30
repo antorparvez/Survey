@@ -9,11 +9,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.assessmentV2tech.survey.R;
+import com.assessmentV2tech.survey.listener.FragmentListener;
 import com.assessmentV2tech.survey.model.Answer;
 import com.assessmentV2tech.survey.model.SurveyResponse;
 
@@ -22,8 +26,14 @@ import java.util.List;
 public class CheckboxFragment extends Fragment {
     private List<SurveyResponse> surveyResponseList;
     private int position;
-    private CheckBox textView;
-    private List<Answer>answerList;
+    private TextView question;
+    private List<Answer> answerList;
+    private RadioGroup radioGP;
+    private TextView quztionTV;
+    private Button submitButton;
+
+    private FragmentListener fragmentListener;
+    private String textAnswer;
 
     public CheckboxFragment(List<SurveyResponse> surveyResponseList, int position, List<Answer> answerList) {
         this.surveyResponseList = surveyResponseList;
@@ -36,8 +46,6 @@ public class CheckboxFragment extends Fragment {
     }
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,12 +56,55 @@ public class CheckboxFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toast.makeText(getActivity(), "size is "+surveyResponseList.size() +" position"+position, Toast.LENGTH_SHORT).show();
 
-      //  textView = view.findViewById(R.id.checkbox);
-      //  textView.setText(surveyResponseList.get(position).getQuestion());
+        radioGP = view.findViewById(R.id.radioGP);
+        question = view.findViewById(R.id.questionTV);
+        submitButton = view.findViewById(R.id.submitBtn);
+
+        fragmentListener = (FragmentListener) getActivity();
+
+        question.setText(surveyResponseList.get(position).getQuestion());
 
 
-        Toast.makeText(getActivity(), "List size is :"+answerList.size(), Toast.LENGTH_SHORT).show();
+        String options = surveyResponseList.get(position).getOptions();
+        String[] optionArray = options.split(",");
+        for (int row = 0; row < 1; row++) {
+            LinearLayout ll = new LinearLayout(getActivity());
+            ll.setOrientation(LinearLayout.VERTICAL);
+
+            for (int i = 1; i <= optionArray.length; i++) {
+                final CheckBox ch = new CheckBox(getActivity());
+                ch.setId((row * 2) + i);
+                if (i != optionArray.length)
+                    ch.setText(optionArray[i - 1]);
+                else {
+                    ch.setText("No options");
+                }
+                ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (ch.isChecked()){
+                            textAnswer = ch.getText().toString();
+                        }
+
+                    }
+                });
+                ll.addView(ch);
+            }
+            radioGP.addView(ll);
+
+        }
+
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragmentListener.getAnswer(textAnswer, surveyResponseList.get(position).getQuestion());
+                submitButton.setText("Submitted");
+                submitButton.setClickable(false);
+            }
+        });
+
     }
+
 }

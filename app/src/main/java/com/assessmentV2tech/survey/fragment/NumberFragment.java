@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.assessmentV2tech.survey.R;
 import com.assessmentV2tech.survey.listener.FragmentListener;
@@ -67,11 +66,9 @@ public class NumberFragment extends Fragment {
 
                 String textAnswer= answerET.getText().toString();
                 fragmentListener.getAnswer(textAnswer,surveyResponseList.get(position).getQuestion());
-
+                submitButton.setText("Submitted");
+                submitButton.setClickable(false);
             }
         });
-
-
-        Toast.makeText(getActivity(), "List size is :"+answerList.size(), Toast.LENGTH_SHORT).show();
     }
 }

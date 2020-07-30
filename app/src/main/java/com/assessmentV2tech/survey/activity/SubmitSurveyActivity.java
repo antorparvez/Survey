@@ -53,7 +53,7 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
 
         initView();
         getResponseFromServer();
-       initFunctionalities();
+        initFunctionalities();
         initListener();
 
 
@@ -63,6 +63,7 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
     private void initFunctionalities(){
         stepView.go(surveyPosition, true);
         surveyBackBTN.setVisibility(View.GONE);
+        surveyNextBTN.setVisibility(View.GONE);
         surveyNextBTN.setText("Start");
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainer,new BlankFragment()).commit();
@@ -74,6 +75,7 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
                 if (response.isSuccessful()){
 
                     surveyResponseList= response.body();
+                    surveyNextBTN.setVisibility(View.VISIBLE);
                     Log.d("TAG", "onResponse: "+surveyResponseList.size());
 
 
@@ -228,8 +230,7 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
         surveyNextBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                surveyBackBTN.setVisibility(View.VISIBLE);
-                surveyNextBTN.setText("Start");
+                surveyNextBTN.setText("Next");
                 stepView.go(surveyPosition, true);
                 initStepper();
 
@@ -239,11 +240,11 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
                         if (surveyResponseList.get(surveyPosition).getRequired()){
                             if (answer==null){
                                 Log.d("HERE", answer);
-                                //Toast
+                                Toast.makeText(SubmitSurveyActivity.this, "Please fill the field", Toast.LENGTH_SHORT).show();
                             }else{
                                 answerList.add(new Answer(answer,question));
                                 checkSurveyQuestionType(surveyResponseList, surveyPosition);
-                                stepView.done(true);
+                               // stepView.done(true);
                                 surveyPosition++;
                             }
                         }
@@ -252,14 +253,14 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
                                 //Toast
                                 answerList.add(new Answer(answer,question));
                                 checkSurveyQuestionType(surveyResponseList, surveyPosition);
-                                stepView.done(true);
+                                //stepView.done(true);
                                 surveyPosition++;
                             }
                         }
                     }else{
                         Log.d("HERE", "Here");
                         checkSurveyQuestionType(surveyResponseList, surveyPosition);
-                        stepView.done(true);
+                       // stepView.done(true);
                         surveyPosition++;
                     }
 
@@ -282,7 +283,7 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
         });
 
 
-        surveyBackBTN.setOnClickListener(new View.OnClickListener() {
+     /*   surveyBackBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (surveyPosition > 0) {
@@ -294,6 +295,8 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
                 }
 
             }
-        });
+        });*/
     }
+
+
 }

@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.assessmentV2tech.survey.R;
 import com.assessmentV2tech.survey.listener.FragmentListener;
@@ -59,22 +58,16 @@ public class TextFragment extends Fragment {
 
         quztionTV.setText(surveyResponseList.get(position).getQuestion());
 
-
-
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String textAnswer= answerET.getText().toString();
                 fragmentListener.getAnswer(textAnswer,surveyResponseList.get(position).getQuestion());
-//                if (textAnswer.trim().equals("")){
-//                    Toast.makeText(getActivity(), "Please type something", Toast.LENGTH_SHORT).show();
-//                }else {
-//                    answerList.add(new Answer(surveyResponseList.get(position).getQuestion(),textAnswer));
-//                }
+                submitButton.setText("Submitted");
+                submitButton.setClickable(false);
             }
         });
 
-      //  Toast.makeText(getActivity(), "List size is :"+answerList.size(), Toast.LENGTH_SHORT).show();
 
     }
 }
