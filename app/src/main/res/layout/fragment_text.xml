@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.TextFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="120dp"
+        android:textSize="22sp"
+        android:background="@drawable/button_bg"
+        android:backgroundTint="#BBDEFB"
+        android:textColor="@color/colorBlack"
+        android:text="this is a question"
+        android:layout_centerHorizontal="true"
+        android:padding="16dp"
+        android:layout_margin="8dp"
+        android:textStyle="bold"
+        android:id="@+id/questionTV"/>
 
-</FrameLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="8dp"
+        android:hint="Type your answer"
+        android:textColor="@color/colorBlack"
+        android:padding="@dimen/sp16"
+        android:id="@+id/text_answerET"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_bg"
+        android:layout_below="@id/text_answerET"
+        android:layout_centerHorizontal="true"
+        android:text="Submit"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/submitBtn"/>
+
+
+
+
+</RelativeLayout>
