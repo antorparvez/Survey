@@ -25,16 +25,14 @@ public class TextFragment extends Fragment {
 
     private List<SurveyResponse> surveyResponseList;
     private int position;
-    private List<Answer>answerList;
     private TextView quztionTV;
     private Button submitButton;
     private EditText answerET;
     private FragmentListener fragmentListener;
 
-    public TextFragment(List<SurveyResponse> surveyResponseList, int position, List<Answer> answerList) {
+    public TextFragment(List<SurveyResponse> surveyResponseList, int position) {
         this.surveyResponseList = surveyResponseList;
         this.position = position;
-        this.answerList = answerList;
     }
 
     public TextFragment() {

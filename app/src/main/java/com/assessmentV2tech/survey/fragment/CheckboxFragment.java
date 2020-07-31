@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.assessmentV2tech.survey.R;
 import com.assessmentV2tech.survey.listener.FragmentListener;
@@ -27,7 +28,6 @@ public class CheckboxFragment extends Fragment {
     private List<SurveyResponse> surveyResponseList;
     private int position;
     private TextView question;
-    private List<Answer> answerList;
     private RadioGroup radioGP;
     private TextView quztionTV;
     private Button submitButton;
@@ -35,10 +35,10 @@ public class CheckboxFragment extends Fragment {
     private FragmentListener fragmentListener;
     private String textAnswer;
 
-    public CheckboxFragment(List<SurveyResponse> surveyResponseList, int position, List<Answer> answerList) {
+    public CheckboxFragment(List<SurveyResponse> surveyResponseList, int position) {
         this.surveyResponseList = surveyResponseList;
         this.position = position;
-        this.answerList = answerList;
+
     }
 
     public CheckboxFragment() {
@@ -68,6 +68,7 @@ public class CheckboxFragment extends Fragment {
 
         String options = surveyResponseList.get(position).getOptions();
         String[] optionArray = options.split(",");
+
         for (int row = 0; row < 1; row++) {
             LinearLayout ll = new LinearLayout(getActivity());
             ll.setOrientation(LinearLayout.VERTICAL);
@@ -80,21 +81,26 @@ public class CheckboxFragment extends Fragment {
                 else {
                     ch.setText("No options");
                 }
-                ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        if (ch.isChecked()){
-                            textAnswer = ch.getText().toString();
-                        }
 
-                    }
-                });
+                    ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            if (ch.isChecked()){
+                                if (textAnswer==null){
+                                    textAnswer = ch.getText().toString();
+                                }else {
+                                    textAnswer=textAnswer+","+ch.getText().toString();
+                                }
+                            }
+
+                        }
+                    });
+
                 ll.addView(ch);
             }
             radioGP.addView(ll);
 
         }
-
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +110,8 @@ public class CheckboxFragment extends Fragment {
                 submitButton.setClickable(false);
             }
         });
+
+
 
     }
 

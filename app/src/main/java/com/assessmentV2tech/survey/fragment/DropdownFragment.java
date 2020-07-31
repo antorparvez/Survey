@@ -28,17 +28,15 @@ public class DropdownFragment extends Fragment {
 
     private List<SurveyResponse> surveyResponseList;
     private int position;
-    private List<Answer>answerList;
     private Spinner dropdown;
     private Button submitBtn;
     private TextView question;
     private String textAnswer;
     private FragmentListener fragmentListener;
 
-    public DropdownFragment(List<SurveyResponse> surveyResponseList, int position, List<Answer> answerList) {
+    public DropdownFragment(List<SurveyResponse> surveyResponseList, int position) {
         this.surveyResponseList = surveyResponseList;
         this.position = position;
-        this.answerList = answerList;
     }
 
     public DropdownFragment() {

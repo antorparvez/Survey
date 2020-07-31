@@ -8,12 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.assessmentV2tech.survey.R;
 import com.assessmentV2tech.survey.fragment.BlankFragment;
 import com.assessmentV2tech.survey.fragment.CheckboxFragment;
 import com.assessmentV2tech.survey.fragment.DropdownFragment;
+import com.assessmentV2tech.survey.fragment.EndFragment;
 import com.assessmentV2tech.survey.fragment.MultipleChoiceFragment;
 import com.assessmentV2tech.survey.fragment.NumberFragment;
 import com.assessmentV2tech.survey.fragment.TextFragment;
@@ -22,6 +24,10 @@ import com.assessmentV2tech.survey.model.Answer;
 import com.assessmentV2tech.survey.model.SavedAnswers;
 import com.assessmentV2tech.survey.model.SurveyResponse;
 import com.assessmentV2tech.survey.network.ApiClient;
+import com.assessmentV2tech.survey.preference.AppPreference;
+import com.assessmentV2tech.survey.preference.PrefKeys;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.shuhart.stepview.StepView;
 
 import java.text.SimpleDateFormat;
@@ -37,7 +43,6 @@ import retrofit2.Response;
 public class SubmitSurveyActivity extends AppCompatActivity implements FragmentListener {
 
     private Button surveyBackBTN,surveyNextBTN;
-    private FrameLayout fragmentContainer;
     private StepView stepView;
     private int surveyPosition=0;
     private FragmentListener fragmentListener;
@@ -46,6 +51,11 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
     private List<SurveyResponse> surveyResponseList = new ArrayList<>();
     private List<Answer> answerList =new ArrayList<>();
     List<SavedAnswers> savedData = new ArrayList<>();
+    private Object Gson;
+    private RelativeLayout lottieAnimationView;
+    private String savedAnswer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,11 +86,8 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
 
                     surveyResponseList= response.body();
                     surveyNextBTN.setVisibility(View.VISIBLE);
+                    lottieAnimationView.setVisibility(View.GONE);
                     Log.d("TAG", "onResponse: "+surveyResponseList.size());
-
-
-
-
                 }
             }
 
@@ -127,27 +134,19 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
         surveyBackBTN = findViewById(R.id.surveyBackBtn);
         surveyNextBTN = findViewById(R.id.surveyNextBtn);
         stepView = findViewById(R.id.step_view);
-        fragmentContainer = findViewById(R.id.fragmentContainer);
+        lottieAnimationView = findViewById(R.id.loader);
         fragmentListener = SubmitSurveyActivity.this;
 
     }
 
-    @Override
-    public void viewFirstFragment() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragmentContainer,new BlankFragment())
-                .addToBackStack(null)
-                .commit();
-    }
+
 
     @Override
     public void onCheckboxItem(List<SurveyResponse> responseList, int position) {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentContainer,new CheckboxFragment(responseList, position,answerList))
-                .addToBackStack(null)
+                .replace(R.id.fragmentContainer,new CheckboxFragment(responseList, position))
                 .commit();
 
 
@@ -158,8 +157,7 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentContainer,new DropdownFragment(responseList, position,answerList))
-                .addToBackStack(null)
+                .replace(R.id.fragmentContainer,new DropdownFragment(responseList, position))
                 .commit();
     }
 
@@ -168,8 +166,7 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentContainer,new MultipleChoiceFragment(responseList, position,answerList))
-                .addToBackStack(null)
+                .replace(R.id.fragmentContainer,new MultipleChoiceFragment(responseList, position))
                 .commit();
     }
 
@@ -178,8 +175,7 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentContainer,new NumberFragment(responseList, position,answerList))
-                .addToBackStack(null)
+                .replace(R.id.fragmentContainer,new NumberFragment(responseList, position))
                 .commit();
     }
 
@@ -188,8 +184,15 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentContainer,new TextFragment(responseList, position,answerList))
-                .addToBackStack(null)
+                .replace(R.id.fragmentContainer,new TextFragment(responseList, position))
+                .commit();
+    }
+
+    @Override
+    public void viewEndFragment(List<SavedAnswers> savedAnswersList) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragmentContainer,new EndFragment(savedAnswersList))
                 .commit();
     }
 
@@ -213,7 +216,6 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
                 .stepNumberTextSize(getResources().getDimensionPixelSize(R.dimen.sp16))
                 // other state methods are equal to the corresponding xml attributes
                 .commit();
-
         stepView.go(surveyPosition, true);
 
     }
@@ -242,25 +244,25 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
                                 Log.d("HERE", answer);
                                 Toast.makeText(SubmitSurveyActivity.this, "Please fill the field", Toast.LENGTH_SHORT).show();
                             }else{
-                                answerList.add(new Answer(answer,question));
+                                answerList.add(new Answer(question,answer));
                                 checkSurveyQuestionType(surveyResponseList, surveyPosition);
-                               // stepView.done(true);
+
                                 surveyPosition++;
                             }
                         }
                         else {
                             if (answer !=null){
                                 //Toast
-                                answerList.add(new Answer(answer,question));
+                                answerList.add(new Answer(question,answer));
                                 checkSurveyQuestionType(surveyResponseList, surveyPosition);
-                                //stepView.done(true);
+
                                 surveyPosition++;
                             }
                         }
                     }else{
                         Log.d("HERE", "Here");
                         checkSurveyQuestionType(surveyResponseList, surveyPosition);
-                       // stepView.done(true);
+
                         surveyPosition++;
                     }
 
@@ -268,7 +270,6 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
 
                 }else {
                     //save answer list here
-                    Toast.makeText(SubmitSurveyActivity.this, "survey complete", Toast.LENGTH_SHORT).show();
                     SavedAnswers savedAnswers = new SavedAnswers(getdateNode(), answerList);
 
                     //Check SharedPref
@@ -276,8 +277,23 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
                     //if not empty, convert the string to list, add the variable to the list
                     //save the new list
 
+                    if (AppPreference.getInstance(SubmitSurveyActivity.this).getString(PrefKeys.PREF_KEY_SAVED_ANSWER ) !=null){
+                        Gson gson = new Gson();
+
+                        savedAnswer= AppPreference.getInstance(SubmitSurveyActivity.this).getString(PrefKeys.PREF_KEY_SAVED_ANSWER);
+                        savedData=gson.fromJson(savedAnswer, new TypeToken<List<SavedAnswers>>() {}.getType());
+
+                    }
 
                     savedData.add(savedAnswers);
+                    fragmentListener.viewEndFragment(savedData);
+                    surveyNextBTN.setVisibility(View.GONE);
+                    stepView.setVisibility(View.GONE);
+
+                    Gson gson = new Gson();
+                    String data = gson.toJson(savedData);
+                    AppPreference.getInstance(SubmitSurveyActivity.this).setString(PrefKeys.PREF_KEY_SAVED_ANSWER, data);
+
                 }
             }
         });

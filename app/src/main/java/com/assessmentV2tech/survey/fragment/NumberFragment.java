@@ -29,14 +29,12 @@ public class NumberFragment extends Fragment {
     private TextView quztionTV;
     private Button submitButton;
     private EditText answerET;
-    private List<Answer>answerList;
 
     private FragmentListener fragmentListener;
 
-    public NumberFragment(List<SurveyResponse> surveyResponseList, int position, List<Answer> answerList) {
+    public NumberFragment(List<SurveyResponse> surveyResponseList, int position) {
         this.surveyResponseList = surveyResponseList;
         this.position = position;
-        this.answerList = answerList;
     }
 
     public NumberFragment() {

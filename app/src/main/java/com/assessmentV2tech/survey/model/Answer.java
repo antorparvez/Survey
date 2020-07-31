@@ -1,5 +1,8 @@
 package com.assessmentV2tech.survey.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Answer {
     private String question;
     private String answer;

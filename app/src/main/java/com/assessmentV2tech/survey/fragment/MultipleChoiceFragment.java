@@ -27,17 +27,15 @@ public class MultipleChoiceFragment extends Fragment {
 
     private List<SurveyResponse> surveyResponseList;
     private int position;
-    private List<Answer>answerList;
 
     private TextView questionTV;
     private RadioGroup optionContainer;
 
 
     private FragmentListener fragmentListener;
-    public MultipleChoiceFragment(List<SurveyResponse> surveyResponseList, int position, List<Answer> answerList) {
+    public MultipleChoiceFragment(List<SurveyResponse> surveyResponseList, int position) {
         this.surveyResponseList = surveyResponseList;
         this.position = position;
-        this.answerList = answerList;
     }
 
 
