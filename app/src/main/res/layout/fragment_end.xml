@@ -2,19 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     android:layout_height="match_parent"
     tools:context=".fragment.EndFragment">
 
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/v2logo">
+
+    </ImageView>
+
     <TextView
+        android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="done"
-        android:textSize="24sp"
+        android:text="@string/complete"
+        android:textSize="18sp"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:layout_marginTop="80dp"
-        android:textColor="@color/colorWhite"/>
+        android:layout_marginTop="120dp"
+        android:textColor="@color/colorBlack"/>
 
     <LinearLayout
         android:layout_width="match_parent"

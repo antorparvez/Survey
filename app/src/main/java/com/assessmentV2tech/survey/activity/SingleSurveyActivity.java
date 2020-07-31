@@ -51,8 +51,6 @@ public class SingleSurveyActivity extends AppCompatActivity {
     }
 
     private void initVars() {
-
-        answerAdapter = new ViewAnswerAdapter(answerList);
         savedAnswer = AppPreference.getInstance(this).getString(PrefKeys.PREF_KEY_SAVED_ANSWER);
         pos = getIntent().getIntExtra("Data", 0);
 
@@ -63,14 +61,17 @@ public class SingleSurveyActivity extends AppCompatActivity {
                 new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(answerAdapter);
     }
 
     private void loadData() {
+
         Gson gson = new Gson();
         savedAnswersList = gson.fromJson(savedAnswer, new TypeToken<List<SavedAnswers>>() {
         }.getType());
         answerList = savedAnswersList.get(pos).getAnswerList();
+        answerAdapter = new ViewAnswerAdapter(answerList);
+
+        recyclerView.setAdapter(answerAdapter);
         answerAdapter.notifyDataSetChanged();
     }
 }

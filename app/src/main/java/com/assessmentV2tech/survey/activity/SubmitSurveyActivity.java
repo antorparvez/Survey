@@ -1,8 +1,12 @@
 package com.assessmentV2tech.survey.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -312,6 +316,29 @@ public class SubmitSurveyActivity extends AppCompatActivity implements FragmentL
 
             }
         });*/
+    }
+
+    @Override
+    public void onBackPressed() {
+        // TODO Auto-generated method stub
+
+        new AlertDialog.Builder(SubmitSurveyActivity.this)
+                .setTitle("Title")
+                .setMessage("Do you really want to exit?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActivityCompat.finishAffinity(SubmitSurveyActivity.this);
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
     }
 
 
