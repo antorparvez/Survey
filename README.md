@@ -2,8 +2,8 @@
 Assessment Test - V2 Technologies LTD
 ##This project uses the following technologies 
 * Java
-* Phared Preferences
-* Custop Api
+* Shared  Preferences
+* Custom Api
 * Retrofit2
 * Recyclerview
 
