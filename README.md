@@ -9,6 +9,9 @@ Assessment Test - V2 Technologies LTD
 
 ![Screenshot_2020-07-31-20-36-15](https://user-images.githubusercontent.com/36919896/89051635-5f7f4780-d376-11ea-8043-c4fc69c265cc.png)
 
+## Screenshots
+[<img src="https://user-images.githubusercontent.com/36919896/89051635-5f7f4780-d376-11ea-8043-c4fc69c265cc.png" width=160>](https://user-images.githubusercontent.com/36919896/89051635-5f7f4780-d376-11ea-8043-c4fc69c265cc.png)
+
 ![Screenshot_2020-07-31-20-36-19](https://user-images.githubusercontent.com/36919896/89051653-660dbf00-d376-11ea-8705-d3a6f55e1e02.png)
 
 ![Screenshot_2020-07-31-20-36-23](https://user-images.githubusercontent.com/36919896/89051657-67d78280-d376-11ea-8385-51c5e93e7402.png)
